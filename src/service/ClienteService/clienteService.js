@@ -1,19 +1,25 @@
 class ClienteService {
-    cadastrarBanco(nomeBanco) {
-        return fetch('http://127.0.0.1:5000/api/bancos/cadastrarBanco', {
+    cadastrarCliente(nomeCliente, cpfCliente) {
+        return fetch('http://127.0.0.1:5000/api/clientes/criarCliente', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ nome: nomeBanco })
+            body: JSON.stringify({ nome: nomeCliente, cpf: cpfCliente })
         })
             .then(response => response.json())
             .then(data => console.log(data))
             .catch(error => console.error(error));
     }
 
-    getAllBancos() {
-        return fetch('http://127.0.0.1:5000/api/bancos/')
+    getCliente(cpf) {
+        return fetch(`http://127.0.0.1:5000/api/clientes/getCliente?cpf=${cpf}`)
+            .then(response => response.json())
+            .catch(error => console.error(error));
+    }
+
+    getClienteSaldoGeral(cpf) {
+        return fetch(`http://127.0.0.1:5000/api/clientes/getClienteSaldoGeral?cpf=${cpf}`)
             .then(response => response.json())
             .catch(error => console.error(error));
     }
