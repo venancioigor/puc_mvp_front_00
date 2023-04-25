@@ -1,31 +1,40 @@
-import React from "react";
-import { CadastraSaldoInicial } from "./components/CadastraSaldoInicial";
-import { CadastraTransacao } from "./components/CadastraTransacao";
-import { GuardaPorquinho } from "./components/GuardaPorquinho";
-import { QuebrarPorquinho } from "./components/QuebrarPorquinho";
-import { TransferirPorquinho } from "./components/TransferirPorquinho";
-import { VerSaldoTotal } from "./components/VerSaldoTotal";
-import { VerPorquinho } from "./components/VerPorquinho";
-import { CadastraUsuario } from "./components/CadastraUsuario";
-import { CadastraBanco } from "./components/CadastraBanco";
-import { AbrirConta } from "./components/AbrirConta";
+import React from 'react';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { CadastraBancoForm } from './components/Banco/CadastraBancoForm'
+import { GetAllBancos } from './components/Banco/GetAllBancos'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, NavLink } from 'reactstrap';
 
-function MinhaCarteira() {
+
+function App() {
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  const toggle = () => setIsOpen(!isOpen);
 
   return (
-    <>
-      <CadastraUsuario />
-      <CadastraBanco />
-      <AbrirConta />
-      <CadastraSaldoInicial />
-      <CadastraTransacao />
-      <GuardaPorquinho />
-      <TransferirPorquinho />
-      <VerPorquinho />
-      <QuebrarPorquinho />
-      <VerSaldoTotal />
-    </>
+    <BrowserRouter>
+      <Navbar color="dark" dark expand="md" className="bg-myblue">
+        <NavbarBrand href="/" className="text-white">MyBank</NavbarBrand>
+        <NavbarToggler onClick={toggle} />
+        <Collapse isOpen={isOpen} navbar>
+          <Nav className="mr-auto" navbar>
+            <NavItem>
+              <NavLink className="text-white" tag={Link} to="/cadastraBanco">Registrar Banco</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink className="text-white" tag={Link} to="/getAllBancos">Get All Bancos</NavLink>
+            </NavItem>
+          </Nav>
+        </Collapse>
+      </Navbar >
+      <div className="container">
+        <Routes>
+          <Route path="/cadastraBanco" element={<CadastraBancoForm />} />
+          <Route path="/getAllBancos" element={<GetAllBancos />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 
-export default MinhaCarteira;
+export default App;
