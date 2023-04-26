@@ -5,16 +5,19 @@ import { ClienteService } from '../../service/ClienteService/clienteService';
 const clienteService = new ClienteService();
 
 function VerCliente() {
-    const [nomeBanco, setNomeBanco] = React.useState('')
+    const [cpfCliente, setCpfCliente] = React.useState('')
+    const [nomeCliente, setNomeCliente] = React.useState(null)
 
-    function handleSubmit(event) {
+    async function handleSubmit(event) {
         event.preventDefault();
-        clienteService.cadastrarBanco(nomeBanco)
-
+        const response = await clienteService.getCliente(cpfCliente)
+        console.log(response)
+        setNomeCliente(response.nome)
+        setCpfCliente('')
     }
 
     function handleOnChange(event) {
-        setNomeBanco(event.target.value)
+        setCpfCliente(event.target.value)
     }
 
     return (
@@ -22,12 +25,17 @@ function VerCliente() {
             <h2>Ver Cliente</h2>
             <Form onSubmit={handleSubmit}>
                 <FormGroup>
-                    <Label for="name">Nome</Label>
-                    <Input type="text" name="name" id="name" value={nomeBanco}
-                        onChange={handleOnChange}
-                        placeholder="Digite o nome do banco" />
+                    <Label for="name">Nome do Cliente</Label>
+                    <Input type="text" name="name" id="name" value={nomeCliente || ''}
+                    />
                 </FormGroup>
-                <Button>Registrar</Button>
+                <FormGroup>
+                    <Label for="name">CPF</Label>
+                    <Input type="text" name="name" id="name" value={cpfCliente}
+                        onChange={handleOnChange}
+                        placeholder="Digite o CPF do cliente que deseja buscar o nome" />
+                </FormGroup>
+                <Button>Buscar</Button>
             </Form>
         </Container>
     );

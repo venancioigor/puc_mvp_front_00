@@ -10,7 +10,8 @@ function CadastraBancoForm() {
   function handleSubmit(event) {
     event.preventDefault();
     bancoService.cadastrarBanco(nomeBanco)
-    
+    setNomeBanco('')
+
   }
 
   function handleOnChange(event) {
