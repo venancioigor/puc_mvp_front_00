@@ -1,21 +1,19 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Link, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { CadastraBancoForm } from './components/Banco/CadastraBancoForm'
 import { GetAllBancos } from './components/Banco/GetAllBancos'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, NavLink } from 'reactstrap';
+import { Navbar, NavbarBrand, Collapse, Nav } from 'reactstrap';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-
 import './App.css';
 
 
 function App() {
-  const [isOpen, setIsOpen] = React.useState(false);
   const [isBancoOpen, setIsBancoOpen] = React.useState(false);
   const [isClienteOpen, setIsClienteOpen] = React.useState(false);
   const [isContasOpen, setIsContasOpen] = React.useState(false);
   const [isPorquinhoOpen, setIsPorquinhoOpen] = React.useState(false);
-  const toggle = () => setIsOpen(!isOpen);
+
   const toggleBanco = () => setIsBancoOpen(!isBancoOpen);
   const toggleCliente = () => setIsClienteOpen(!isClienteOpen);
   const toggleConta = () => setIsContasOpen(!isContasOpen);
@@ -34,9 +32,9 @@ function App() {
               Cliente
             </DropdownToggle>
             <DropdownMenu dark>
-              <DropdownItem tag={Link} to="/cadastraBanco">Cadastrar Cliente</DropdownItem>
-              <DropdownItem tag={Link} to="/getAllBancos">Ver Cliente</DropdownItem>
-              <DropdownItem tag={Link} to="/getAllBancos">Ver Saldo Geral</DropdownItem>
+              <DropdownItem tag={Link} to="/cadastraCliente">Cadastrar Cliente</DropdownItem>
+              <DropdownItem tag={Link} to="/verCliente">Ver Cliente</DropdownItem>
+              <DropdownItem tag={Link} to="/verSaldoGeral">Ver Saldo Geral</DropdownItem>
             </DropdownMenu>
           </Dropdown>
           <Dropdown dark isOpen={isContasOpen} toggle={toggleConta}>
@@ -44,11 +42,11 @@ function App() {
               Contas
             </DropdownToggle>
             <DropdownMenu dark>
-              <DropdownItem tag={Link} to="/cadastraBanco">Abrir conta</DropdownItem>
-              <DropdownItem tag={Link} to="/getAllBancos">Deletar conta</DropdownItem>
-              <DropdownItem tag={Link} to="/getAllBancos">Ver contas cliente</DropdownItem>
-              <DropdownItem tag={Link} to="/getAllBancos">Ver Saldo Total Contas</DropdownItem>
-              <DropdownItem tag={Link} to="/getAllBancos">Transferir valor entre contas</DropdownItem>
+              <DropdownItem tag={Link} to="/abrirConta">Abrir conta</DropdownItem>
+              <DropdownItem tag={Link} to="/deletarConta">Deletar conta</DropdownItem>
+              <DropdownItem tag={Link} to="/verContasCliente">Ver contas cliente</DropdownItem>
+              <DropdownItem tag={Link} to="/verSaldoTotalContas">Ver Saldo Total Contas</DropdownItem>
+              <DropdownItem tag={Link} to="/transferirValorEntreContas">Transferir valor entre contas</DropdownItem>
             </DropdownMenu>
           </Dropdown>
           <Dropdown dark isOpen={isPorquinhoOpen} toggle={togglePorquinho}>
@@ -56,11 +54,11 @@ function App() {
               Porquinhos
             </DropdownToggle>
             <DropdownMenu dark>
-              <DropdownItem tag={Link} to="/cadastraBanco">Registrar porquinho</DropdownItem>
-              <DropdownItem tag={Link} to="/getAllBancos">Ver porquinhos</DropdownItem>
-              <DropdownItem tag={Link} to="/getAllBancos">Ver Saldo Total porquinho</DropdownItem>
-              <DropdownItem tag={Link} to="/getAllBancos">Transferir Valor Entre Porquinho</DropdownItem>
-              <DropdownItem tag={Link} to="/getAllBancos">Deletar porquinho</DropdownItem>
+              <DropdownItem tag={Link} to="/registrarPorquinho">Registrar porquinho</DropdownItem>
+              <DropdownItem tag={Link} to="/verPorquinho">Ver porquinhos</DropdownItem>
+              <DropdownItem tag={Link} to="/verSaldoTotalPorquinho">Ver Saldo Total porquinho</DropdownItem>
+              <DropdownItem tag={Link} to="/transferirValorEntrePorquinho">Transferir Valor Entre Porquinho</DropdownItem>
+              <DropdownItem tag={Link} to="/deletarPorquinho">Deletar porquinho</DropdownItem>
             </DropdownMenu>
           </Dropdown>
           <Dropdown dark isOpen={isBancoOpen} toggle={toggleBanco}>
@@ -68,16 +66,33 @@ function App() {
               Banco
             </DropdownToggle>
             <DropdownMenu dark>
-              <DropdownItem tag={Link} to="/cadastraBanco">Registrar Banco</DropdownItem>
-              <DropdownItem tag={Link} to="/getAllBancos">Ver todos os bancos</DropdownItem>
+              <DropdownItem tag={Link} to="/registrarBanco">Registrar Banco</DropdownItem>
+              <DropdownItem tag={Link} to="/verTodosBancos">Ver todos os bancos</DropdownItem>
             </DropdownMenu>
           </Dropdown>
         </Collapse>
       </Navbar >
       <div className="container">
         <Routes>
-          <Route path="/cadastraBanco" element={<CadastraBancoForm />} />
-          <Route path="/getAllBancos" element={<GetAllBancos />} />
+          {/* cliente */}
+          <Route path="/cadastraCliente" element={<cadastraCliente />} />
+          <Route path="/verCliente" element={<verCliente />} />
+          <Route path="/verSaldoGeral" element={<verSaldoGeral />} />
+          {/* banco */}
+          <Route path="/registrarBanco" element={<CadastraBancoForm />} />
+          <Route path="/verTodosBancos" element={<GetAllBancos />} />
+          {/* porquinho */}
+          <Route path="/registrarPorquinho" element={<registrarPorquinho />} />
+          <Route path="/verPorquinho" element={<verPorquinho />} />
+          <Route path="/verSaldoTotalPorquinho" element={<verSaldoTotalPorquinho />} />
+          <Route path="/transferirValorEntrePorquinho" element={<transferirValorEntrePorquinho />} />
+          <Route path="/deletarPorquinho" element={<deletarPorquinho />} />
+          {/* conta */}
+          <Route path="/abrirConta" element={<abrirConta />} />
+          <Route path="/deletarConta" element={<deletarConta />} />
+          <Route path="/verContasCliente" element={<verContasCliente />} />
+          <Route path="/verSaldoTotalContas" element={<verSaldoTotalContas />} />
+          <Route path="/abrirtransferirValorEntreContasConta" element={<transferirValorEntreContas />} />
         </Routes>
       </div>
     </BrowserRouter>
