@@ -71,7 +71,7 @@ function App() {
               <DropdownItem tag={Link} to="/verPorquinho">Ver porquinhos</DropdownItem>
               <DropdownItem tag={Link} to="/verSaldoTotalPorquinho">Ver Saldo Total porquinho</DropdownItem>
               <DropdownItem tag={Link} to="/transferirValorEntrePorquinho">Transferir Valor Entre Porquinho</DropdownItem>
-              <DropdownItem tag={Link} to="/deletarPorquinho">Deletar porquinho</DropdownItem>
+              <DropdownItem tag={Link} to="/deletarPorquinho">Quebrar porquinho</DropdownItem>
             </DropdownMenu>
           </Dropdown>
           <Dropdown dark isOpen={isBancoOpen} toggle={toggleBanco}>
@@ -105,7 +105,7 @@ function App() {
           <Route path="/deletarConta" element={<DeletarConta />} />
           <Route path="/verContasCliente" element={<VerContasCliente />} />
           <Route path="/verSaldoTotalContas" element={<VerSaldoTotalContas />} />
-          <Route path="/abrirtransferirValorEntreContasConta" element={<TransferirValorEntreContas />} />
+          <Route path="/transferirValorEntreContas" element={<TransferirValorEntreContas />} />
         </Routes>
       </div>
     </BrowserRouter>

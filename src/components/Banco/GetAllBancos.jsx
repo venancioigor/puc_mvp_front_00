@@ -26,7 +26,7 @@ function GetAllBancos() {
 
   return (
     <Container>
-      <h2>GetAllBancos</h2>
+      <h2>Ver todos os bancos</h2>
       <Form onSubmit={handleSubmit}>
         <FormGroup>
           <Label for="name">Nome</Label>

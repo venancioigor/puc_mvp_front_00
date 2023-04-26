@@ -19,7 +19,7 @@ function CadastraCliente() {
 
     return (
         <Container>
-            <h2>Registrar Banco</h2>
+            <h2>Cadastrar Cliente</h2>
             <Form onSubmit={handleSubmit}>
                 <FormGroup>
                     <Label for="name">Nome</Label>

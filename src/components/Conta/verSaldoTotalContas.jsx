@@ -10,7 +10,7 @@ function VerSaldoTotalContas() {
   function handleSubmit(event) {
     event.preventDefault();
     bancoService.cadastrarBanco(nomeBanco)
-    
+
   }
 
   function handleOnChange(event) {
@@ -19,7 +19,7 @@ function VerSaldoTotalContas() {
 
   return (
     <Container>
-      <h2>Registrar Banco</h2>
+      <h2>Ver Saldo Total Contas</h2>
       <Form onSubmit={handleSubmit}>
         <FormGroup>
           <Label for="name">Nome</Label>

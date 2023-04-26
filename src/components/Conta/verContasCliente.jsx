@@ -19,7 +19,7 @@ function VerContasCliente() {
 
     return (
         <Container>
-            <h2>Registrar Banco</h2>
+            <h2>Ver Contas Cliente</h2>
             <Form onSubmit={handleSubmit}>
                 <FormGroup>
                     <Label for="name">Nome</Label>

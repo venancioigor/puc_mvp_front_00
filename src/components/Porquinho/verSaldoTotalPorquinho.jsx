@@ -19,7 +19,7 @@ function VerSaldoTotalPorquinho() {
 
     return (
         <Container>
-            <h2>Registrar Banco</h2>
+            <h2>Ver Saldo Total dos Porquinhos</h2>
             <Form onSubmit={handleSubmit}>
                 <FormGroup>
                     <Label for="name">Nome</Label>

@@ -10,7 +10,7 @@ function VerPorquinho() {
   function handleSubmit(event) {
     event.preventDefault();
     bancoService.cadastrarBanco(nomeBanco)
-    
+
   }
 
   function handleOnChange(event) {
@@ -19,7 +19,7 @@ function VerPorquinho() {
 
   return (
     <Container>
-      <h2>Registrar Banco</h2>
+      <h2>Ver Porquinho</h2>
       <Form onSubmit={handleSubmit}>
         <FormGroup>
           <Label for="name">Nome</Label>
