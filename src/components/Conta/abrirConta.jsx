@@ -1,15 +1,15 @@
 import React from 'react';
 import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
-import { BancoService } from '../../service/BancoService/bancoService';
+import { ContaService } from '../../service/ContaService/contaService';
 
-const bancoService = new BancoService();
+const contaService = new ContaService();
 
 function AbrirConta() {
   const [nomeBanco, setNomeBanco] = React.useState('')
 
   function handleSubmit(event) {
     event.preventDefault();
-    bancoService.cadastrarBanco(nomeBanco)
+    contaService.cadastrarBanco(nomeBanco)
 
   }
 

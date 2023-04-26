@@ -1,15 +1,15 @@
 import React from 'react';
 import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
-import { BancoService } from '../../service/BancoService/bancoService';
+import { PorquinhoService } from '../../service/PorquinhoService/porquinhoService';
 
-const bancoService = new BancoService();
+const porquinhoService = new PorquinhoService();
 
 function VerSaldoTotalPorquinho() {
     const [nomeBanco, setNomeBanco] = React.useState('')
 
     function handleSubmit(event) {
         event.preventDefault();
-        bancoService.cadastrarBanco(nomeBanco)
+        porquinhoService.cadastrarBanco(nomeBanco)
 
     }
 
