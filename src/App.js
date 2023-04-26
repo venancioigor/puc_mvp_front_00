@@ -1,10 +1,23 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import { CadastraBancoForm } from './components/Banco/CadastraBancoForm'
-import { GetAllBancos } from './components/Banco/GetAllBancos'
+import { CadastraBancoForm } from './components/Banco/CadastraBancoForm';
+import { GetAllBancos } from './components/Banco/GetAllBancos';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { CadastraCliente } from './components/Cliente/cadastrarCliente';
+import { VerCliente } from './components/Cliente/verCliente';
+import { VerSaldoGeral } from './components/Cliente/verSaldoGeral';
 import { Navbar, NavbarBrand, Collapse, Nav } from 'reactstrap';
+import { AbrirConta } from './components/Conta/abrirConta';
+import { DeletarConta } from './components/Conta/deletarConta';
+import { TransferirValorEntreContas } from './components/Conta/transferirValorEntreContas';
+import { VerContasCliente } from './components/Conta/verContasCliente';
+import { VerSaldoTotalContas } from './components/Conta/verSaldoTotalContas';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import { DeletarPorquinho } from './components/Porquinho/deletarPorquinho';
+import { RegistrarPorquinho } from './components/Porquinho/registrarPorquinho';
+import { TransferirValorEntrePorquinho } from './components/Porquinho/transferirValorEntrePorquinho';
+import { VerPorquinho } from './components/Porquinho/verPorquinho';
+import { VerSaldoTotalPorquinho } from './components/Porquinho/verSaldoTotalPorquinho';
 import './App.css';
 
 
@@ -75,24 +88,24 @@ function App() {
       <div className="container">
         <Routes>
           {/* cliente */}
-          <Route path="/cadastraCliente" element={<cadastraCliente />} />
-          <Route path="/verCliente" element={<verCliente />} />
-          <Route path="/verSaldoGeral" element={<verSaldoGeral />} />
+          <Route path="/cadastraCliente" element={<CadastraCliente />} />
+          <Route path="/verCliente" element={<VerCliente />} />
+          <Route path="/verSaldoGeral" element={<VerSaldoGeral />} />
           {/* banco */}
           <Route path="/registrarBanco" element={<CadastraBancoForm />} />
           <Route path="/verTodosBancos" element={<GetAllBancos />} />
           {/* porquinho */}
-          <Route path="/registrarPorquinho" element={<registrarPorquinho />} />
-          <Route path="/verPorquinho" element={<verPorquinho />} />
-          <Route path="/verSaldoTotalPorquinho" element={<verSaldoTotalPorquinho />} />
-          <Route path="/transferirValorEntrePorquinho" element={<transferirValorEntrePorquinho />} />
-          <Route path="/deletarPorquinho" element={<deletarPorquinho />} />
+          <Route path="/registrarPorquinho" element={<RegistrarPorquinho />} />
+          <Route path="/verPorquinho" element={<VerPorquinho />} />
+          <Route path="/verSaldoTotalPorquinho" element={<VerSaldoTotalPorquinho />} />
+          <Route path="/transferirValorEntrePorquinho" element={<TransferirValorEntrePorquinho />} />
+          <Route path="/deletarPorquinho" element={<DeletarPorquinho />} />
           {/* conta */}
-          <Route path="/abrirConta" element={<abrirConta />} />
-          <Route path="/deletarConta" element={<deletarConta />} />
-          <Route path="/verContasCliente" element={<verContasCliente />} />
-          <Route path="/verSaldoTotalContas" element={<verSaldoTotalContas />} />
-          <Route path="/abrirtransferirValorEntreContasConta" element={<transferirValorEntreContas />} />
+          <Route path="/abrirConta" element={<AbrirConta />} />
+          <Route path="/deletarConta" element={<DeletarConta />} />
+          <Route path="/verContasCliente" element={<VerContasCliente />} />
+          <Route path="/verSaldoTotalContas" element={<VerSaldoTotalContas />} />
+          <Route path="/abrirtransferirValorEntreContasConta" element={<TransferirValorEntreContas />} />
         </Routes>
       </div>
     </BrowserRouter>
