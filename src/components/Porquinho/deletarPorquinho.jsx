@@ -5,30 +5,60 @@ import { PorquinhoService } from '../../service/PorquinhoService/porquinhoServic
 const porquinhoService = new PorquinhoService();
 
 function DeletarPorquinho() {
-  const [nomeBanco, setNomeBanco] = React.useState('')
+  const [cpfCliente, setCpfCliente] = React.useState('')
+  const [porquinhosCliente, setPorquinhosCliente] = React.useState([])
+  const [porquinhoEscolhido, setPorquinhoEscolhido] = React.useState('')
+  const [isOk, setIsOk] = React.useState(false)
 
   function handleSubmit(event) {
     event.preventDefault();
-    porquinhoService.cadastrarBanco(nomeBanco)
-
+    const idPorquinho = recuperarIdPorquinho(porquinhoEscolhido)
+    porquinhoService.deletarPorquinho(cpfCliente, idPorquinho)
+    setCpfCliente('')
+    setPorquinhosCliente([])
   }
 
-  function handleOnChange(event) {
-    setNomeBanco(event.target.value)
+  function handleOnChangeCpf(event) {
+    setCpfCliente(event.target.value)
+  }
+
+  function recuperarIdPorquinho(objetivoPorquinho) {
+    const idPorquinho = porquinhosCliente.find(porquinho => porquinho.objetivo === objetivoPorquinho).id;
+    return idPorquinho;
+  }
+
+  async function handleBuscarPorquinhos() {
+    const response = await porquinhoService.getAllPorquinhos(cpfCliente)
+    setPorquinhosCliente(response)
+  }
+
+  function handleSelectChange(event) {
+    setPorquinhoEscolhido(event.target.value);
   }
 
   return (
     <Container>
-      <h2>Quebrar Porquinho</h2>
+      <h2>Deletar Conta</h2>
       <Form onSubmit={handleSubmit}>
         <FormGroup>
-          <Label for="name">Nome</Label>
-          <Input type="text" name="name" id="name" value={nomeBanco}
-            onChange={handleOnChange}
-            placeholder="Digite o nome do banco" />
+          <Label for="name">CPF do cliente</Label>
+          <Input type="text" name="name" id="name" value={cpfCliente}
+            onChange={handleOnChangeCpf}
+            placeholder="Digite o CPF do cliente" />
         </FormGroup>
-        <Button>Registrar</Button>
+        <Button onClick={handleBuscarPorquinhos}>Buscar Porquinhos</Button>
+        <FormGroup>
+          <Label for="name">Porquinhos do cliente</Label>
+          <Input type="select" onChange={handleSelectChange} value={porquinhoEscolhido}>
+            <option>Selecione um porquinho</option>
+            {porquinhosCliente.length > 0 && porquinhosCliente.map((porquinho) => (
+              <option key={porquinho.id} value={porquinho.objetivo}>{porquinho.objetivo}</option>
+            ))}
+          </Input>
+        </FormGroup>
+        <Button>Deletar</Button>
       </Form>
+      {isOk && <p>Porquinho quebrado!</p>}
     </Container>
   );
 }

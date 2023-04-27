@@ -5,16 +5,62 @@ import { PorquinhoService } from '../../service/PorquinhoService/porquinhoServic
 const porquinhoService = new PorquinhoService();
 
 function TransferirValorEntrePorquinho() {
-  const [nomeBanco, setNomeBanco] = React.useState('')
+  const [cpfCliente, setCpfCliente] = React.useState('')
+  const [porquinhosClienteOrigem, setPorquinhosClienteOrigem] = React.useState([])
+  const [porquinhosClienteDestino, setPorquinhosClienteDestino] = React.useState([])
+  const [porquinhoOrigemEscolhida, setPorquinhoOrigemEscolhida] = React.useState('')
+  const [porquinhoDestinoEscolhida, setPorquinhoDestinoEscolhida] = React.useState('')
+  const [valorTransferido, setValorTransferido] = React.useState(0)
+  const [isOk, setIsOk] = React.useState(false)
 
   function handleSubmit(event) {
     event.preventDefault();
-    porquinhoService.cadastrarBanco(nomeBanco)
-
+    const idContaOrigem = recuperaIdConta(porquinhoOrigemEscolhida, porquinhosClienteOrigem)
+    const idContaDestino = recuperaIdConta(porquinhoDestinoEscolhida, porquinhosClienteDestino)
+    porquinhoService.transferirValorEntrePorquinho(idContaOrigem, idContaDestino, cpfCliente, valorTransferido)
+    setIsOk(true)
+    limparInputs();
   }
 
-  function handleOnChange(event) {
-    setNomeBanco(event.target.value)
+  function limparInputs() {
+    setCpfCliente('')
+    setPorquinhosClienteOrigem([])
+    setPorquinhosClienteDestino([])
+    setPorquinhoOrigemEscolhida('')
+    setPorquinhoDestinoEscolhida('')
+    setValorTransferido(0)
+  }
+
+  function handleOnChangeCpf(event) {
+    setCpfCliente(event.target.value)
+  }
+
+  function recuperaIdConta(objetivoPorquinho, porquinhosCliente) {
+    const idPorquinho = porquinhosCliente.find(porquinho => porquinho.objetivo === objetivoPorquinho).id;
+    return idPorquinho;
+  }
+
+  async function handleBuscarPorquinhos() {
+    const response = await porquinhoService.getAllPorquinhos(cpfCliente)
+    console.log(response)
+    setPorquinhosClienteOrigem(response)
+  }
+
+  function handleSelectChangeOrigem(event) {
+    setPorquinhoOrigemEscolhida(event.target.value)
+  }
+
+  function handleOnClickSelectDestino() {
+    const novasContas = porquinhosClienteOrigem.filter(conta => conta.conta !== porquinhoOrigemEscolhida)
+    setPorquinhosClienteDestino(novasContas)
+  }
+
+  function handleSelectChangeDestino(event) {
+    setPorquinhoDestinoEscolhida(event.target.value);
+  }
+
+  function handleOnChangeValorTransferido(event) {
+    setValorTransferido(parseFloat(event.target.value));
   }
 
   return (
@@ -22,13 +68,39 @@ function TransferirValorEntrePorquinho() {
       <h2>Transferir Valor Entre Porquinhos</h2>
       <Form onSubmit={handleSubmit}>
         <FormGroup>
-          <Label for="name">Nome</Label>
-          <Input type="text" name="name" id="name" value={nomeBanco}
-            onChange={handleOnChange}
-            placeholder="Digite o nome do banco" />
+          <Label for="name">CPF</Label>
+          <Input type="text" name="name" id="name" value={cpfCliente}
+            onChange={handleOnChangeCpf}
+            placeholder="Digite o CPF do cliente" />
         </FormGroup>
-        <Button>Registrar</Button>
+        <Button onClick={handleBuscarPorquinhos}>Buscar Porquinhos</Button>
+        <FormGroup>
+          <Label for="name">Porquinho Origem</Label>
+          <Input type="select" onChange={handleSelectChangeOrigem} value={porquinhoOrigemEscolhida}>
+            <option>Selecione o porquinho origem</option>
+            {porquinhosClienteOrigem.length > 0 && porquinhosClienteOrigem.map((porquinho) => (
+              <option key={porquinho.id} value={porquinho.objetivo}>{porquinho.objetivo}</option>
+            ))}
+          </Input>
+        </FormGroup>
+        <FormGroup>
+          <Label for="name">Porquinho Destino</Label>
+          <Input type="select" onChange={handleSelectChangeDestino} onClick={handleOnClickSelectDestino} value={porquinhoDestinoEscolhida}>
+            <option>Selecione o porquinho destino</option>
+            {porquinhosClienteDestino.length > 0 && porquinhosClienteDestino.map((porquinho) => (
+              <option key={porquinho.id} value={porquinho.objetivo}>{porquinho.objetivo}</option>
+            ))}
+          </Input>
+        </FormGroup>
+        <FormGroup>
+          <Label for="name">Valor em R$</Label>
+          <Input type="text" name="name" id="name" value={valorTransferido}
+            onChange={handleOnChangeValorTransferido}
+            placeholder="Digite o valor a ser transferido" />
+        </FormGroup>
+        <Button>Realizar transferência</Button>
       </Form>
+      {isOk && <p>Transferência realizada com sucesso</p>}
     </Container>
   );
 }

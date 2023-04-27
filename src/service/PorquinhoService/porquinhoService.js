@@ -26,8 +26,8 @@ class PorquinhoService {
             .catch(error => console.error(error));
     }
 
-    getAllPorquinhos() {
-        return fetch('http://127.0.0.1:5000/api/porquinhos/getAllPorquinhos')
+    getAllPorquinhos(cpf) {
+        return fetch(`http://127.0.0.1:5000/api/porquinhos/getAllPorquinhos?cpf=${cpf}`)
             .then(response => response.json())
             .catch(error => console.error(error));
     }
@@ -38,8 +38,8 @@ class PorquinhoService {
     }
 
     deletarPorquinho(cpfCliente, idPorquinho) {
-        return fetch('http://127.0.0.1:5000/api/porquinhos/deletarPorquinho', {
-            method: 'POST',
+        return fetch(`http://127.0.0.1:5000/api/porquinhos/deletarPorquinho?id_porquinho=${idPorquinho}&cpf=${cpfCliente}`, {
+            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
             },

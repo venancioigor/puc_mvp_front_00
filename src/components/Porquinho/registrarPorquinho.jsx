@@ -4,16 +4,42 @@ import { PorquinhoService } from '../../service/PorquinhoService/porquinhoServic
 const porquinhoService = new PorquinhoService();
 
 function RegistrarPorquinho() {
-  const [nomeBanco, setNomeBanco] = React.useState('')
+  const [objetivo, setObjetivo] = React.useState('')
+  const [cpf, setCpf] = React.useState('')
+  const [saldo, setSaldo] = React.useState(0)
+  const [isOk, setIsOk] = React.useState(false)
 
   function handleSubmit(event) {
     event.preventDefault();
-    porquinhoService.cadastrarBanco(nomeBanco)
+    porquinhoService.cadastrarPorquinho(cpf, objetivo, saldo)
+      .then((response) => {
+        if (response === 'OK') {
+          setIsOk(true);
+        }
+      })
+      .catch((error) => {
+        setIsOk(false);
+        console.log(error)
+      });
 
+    limpaInputs()
+    setIsOk(true)
   }
 
-  function handleOnChange(event) {
-    setNomeBanco(event.target.value)
+  function limpaInputs() {
+    setCpf('')
+    setSaldo(0)
+    setObjetivo('')
+  }
+
+  function handleOnChangeObjetivo(event) {
+    setObjetivo(event.target.value)
+  }
+  function handleOnChangeCpf(event) {
+    setCpf(event.target.value)
+  }
+  function handleOnChangeSaldo(event) {
+    setSaldo(parseFloat(event.target.value))
   }
 
   return (
@@ -21,12 +47,25 @@ function RegistrarPorquinho() {
       <h2>Registrar Porquinho</h2>
       <Form onSubmit={handleSubmit}>
         <FormGroup>
-          <Label for="name">Nome</Label>
-          <Input type="text" name="name" id="name" value={nomeBanco}
-            onChange={handleOnChange}
-            placeholder="Digite o nome do banco" />
+          <Label for="name">CPF do Cliente</Label>
+          <Input type="text" name="name" id="name" value={cpf}
+            onChange={handleOnChangeCpf}
+            placeholder="Digite o CPF do cliente dono da conta" />
         </FormGroup>
-        <Button>Registrar</Button>
+        <FormGroup>
+          <Label for="name">Objetivo do porquinho</Label>
+          <Input type="text" name="name" id="name" value={objetivo}
+            onChange={handleOnChangeObjetivo}
+            placeholder="Digite o objetivo desse porquinho" />
+        </FormGroup>
+        <FormGroup>
+          <Label for="name">Saldo do Porquinho</Label>
+          <Input type="text" name="name" id="name" value={saldo}
+            onChange={handleOnChangeSaldo}
+            placeholder="Digite o saldo atual do porquinho" />
+        </FormGroup>
+        <Button>Registrar porquinho</Button>
+        {isOk && <p>Porquinho registrado com sucesso!</p>}
       </Form>
     </Container>
   );

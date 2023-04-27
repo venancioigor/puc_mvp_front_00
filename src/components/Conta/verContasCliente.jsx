@@ -19,8 +19,6 @@ function VerContasCliente() {
         setCpf('')
     }
 
-    console.log(contasCliente);
-
     function handleOnChange(event) {
         setCpf(event.target.value)
     }
