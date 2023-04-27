@@ -1,7 +1,7 @@
 class ContaService {
 
     abrirConta(cpfCliente, nomeBanco, sd, numeroConta) {
-        return fetch('http://127.0.0.1:5000"/api/contas/abrirContas', {
+        return fetch('http://127.0.0.1:5000/api/contas/abrirContas', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -31,6 +31,7 @@ class ContaService {
             .then(response => response.json())
             .catch(error => console.error(error));
     }
+
     getSaldoTotalContas(cpf) {
         return fetch(`http://127.0.0.1:5000/api/contas/getSaldoTotalContas?cpf=${cpf}`)
             .then(response => response.json())

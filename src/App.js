@@ -18,6 +18,7 @@ import { RegistrarPorquinho } from './components/Porquinho/registrarPorquinho';
 import { TransferirValorEntrePorquinho } from './components/Porquinho/transferirValorEntrePorquinho';
 import { VerPorquinho } from './components/Porquinho/verPorquinho';
 import { VerSaldoTotalPorquinho } from './components/Porquinho/verSaldoTotalPorquinho';
+import { Home } from './components/Home';
 import './App.css';
 
 
@@ -87,6 +88,8 @@ function App() {
       </Navbar >
       <div className="container">
         <Routes>
+          {/* home */}
+          <Route path="/" element={<Home />} />
           {/* cliente */}
           <Route path="/cadastraCliente" element={<CadastraCliente />} />
           <Route path="/verCliente" element={<VerCliente />} />

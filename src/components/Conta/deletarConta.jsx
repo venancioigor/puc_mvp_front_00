@@ -5,16 +5,35 @@ import { ContaService } from '../../service/ContaService/contaService';
 const contaService = new ContaService();
 
 function DeletarConta() {
-  const [nomeBanco, setNomeBanco] = React.useState('')
+  const [cpfCliente, setCpfCliente] = React.useState('')
+  const [contasCliente, setContasCliente] = React.useState([])
+  const [contaEscolhida, setContaEscolhida] = React.useState('')
 
   function handleSubmit(event) {
     event.preventDefault();
-    contaService.cadastrarBanco(nomeBanco)
-
+    const idConta = recuperaIdConta(contaEscolhida)
+    contaService.deletarConta(cpfCliente, idConta)
+    setCpfCliente('')
+    setContasCliente([])
   }
 
-  function handleOnChange(event) {
-    setNomeBanco(event.target.value)
+  function handleOnChangeCpf(event) {
+    setCpfCliente(event.target.value)
+  }
+
+  function recuperaIdConta(numeroConta) {
+    const idConta = contasCliente.find(conta => conta.conta === numeroConta).id;
+    return idConta;
+  }
+
+  async function handleBuscarContas() {
+    const response = await contaService.getContasPorCliente(cpfCliente)
+    console.log(response)
+    setContasCliente(response)
+  }
+
+  function handleSelectChange(event) {
+    setContaEscolhida(event.target.value);
   }
 
   return (
@@ -22,12 +41,22 @@ function DeletarConta() {
       <h2>Deletar Conta</h2>
       <Form onSubmit={handleSubmit}>
         <FormGroup>
-          <Label for="name">Nome</Label>
-          <Input type="text" name="name" id="name" value={nomeBanco}
-            onChange={handleOnChange}
-            placeholder="Digite o nome do banco" />
+          <Label for="name">CPF do cliente</Label>
+          <Input type="text" name="name" id="name" value={cpfCliente}
+            onChange={handleOnChangeCpf}
+            placeholder="Digite o CPF do cliente" />
         </FormGroup>
-        <Button>Registrar</Button>
+        <Button onClick={handleBuscarContas}>Buscar contas</Button>
+        <FormGroup>
+          <Label for="name">Conta do cliente</Label>
+          <Input type="select" onChange={handleSelectChange} value={contaEscolhida}>
+            <option>Selecione uma conta</option>
+            {contasCliente.length > 0 && contasCliente.map((conta) => (
+              <option key={conta.id} value={conta.nome}>{conta.conta}</option>
+            ))}
+          </Input>
+        </FormGroup>
+        <Button>Deletar</Button>
       </Form>
     </Container>
   );

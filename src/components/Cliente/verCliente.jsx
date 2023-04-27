@@ -11,7 +11,6 @@ function VerCliente() {
     async function handleSubmit(event) {
         event.preventDefault();
         const response = await clienteService.getCliente(cpfCliente)
-        console.log(response)
         setNomeCliente(response.nome)
         setCpfCliente('')
     }

@@ -5,16 +5,17 @@ import { ClienteService } from '../../service/ClienteService/clienteService';
 const clienteService = new ClienteService();
 
 function VerSaldoGeral() {
-  const [nomeBanco, setNomeBanco] = React.useState('')
+  const [cpfCliente, setCpfCliente] = React.useState('')
+  const [saldoGeral, setSaldoGeral] = React.useState(0)
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
-    clienteService.cadastrarBanco(nomeBanco)
-
+    const response = await clienteService.getClienteSaldoGeral(cpfCliente)
+    setSaldoGeral(response.saldo_total)
   }
 
   function handleOnChange(event) {
-    setNomeBanco(event.target.value)
+    setCpfCliente(event.target.value)
   }
 
   return (
@@ -22,12 +23,18 @@ function VerSaldoGeral() {
       <h2>Saldo Geral</h2>
       <Form onSubmit={handleSubmit}>
         <FormGroup>
-          <Label for="name">Nome</Label>
-          <Input type="text" name="name" id="name" value={nomeBanco}
+          <Label for="name">CPF</Label>
+          <Input type="text" name="name" id="name" value={cpfCliente}
             onChange={handleOnChange}
-            placeholder="Digite o nome do banco" />
+            placeholder="Digite o CPF do cliente" />
         </FormGroup>
-        <Button>Registrar</Button>
+        <FormGroup>
+          <Label for="name">Saldo Geral em R$</Label>
+          <Input type="text" name="name" id="name" value={saldoGeral}
+
+          />
+        </FormGroup>
+        <Button>Buscar</Button>
       </Form>
     </Container>
   );

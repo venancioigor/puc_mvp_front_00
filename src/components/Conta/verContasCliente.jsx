@@ -1,20 +1,28 @@
 import React from 'react';
 import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { ContaService } from '../../service/ContaService/contaService';
+import { ListaContas } from './ListaContas'
+import { Conta } from './Conta'
 
 const contaService = new ContaService();
 
 function VerContasCliente() {
-    const [nomeBanco, setNomeBanco] = React.useState('')
+    const [cpf, setCpf] = React.useState('')
+    const [contasCliente, setContasCliente] = React.useState([])
+    //const [isOk, setIsOk] = React.useState('')
 
-    function handleSubmit(event) {
+    async function handleSubmit(event) {
         event.preventDefault();
-        contaService.cadastrarBanco(nomeBanco)
-
+        const response = await contaService.getContasPorCliente(cpf)
+        console.log(response)
+        setContasCliente(response)
+        setCpf('')
     }
 
+    console.log(contasCliente);
+
     function handleOnChange(event) {
-        setNomeBanco(event.target.value)
+        setCpf(event.target.value)
     }
 
     return (
@@ -22,13 +30,24 @@ function VerContasCliente() {
             <h2>Ver Contas Cliente</h2>
             <Form onSubmit={handleSubmit}>
                 <FormGroup>
-                    <Label for="name">Nome</Label>
-                    <Input type="text" name="name" id="name" value={nomeBanco}
+                    <Label for="name">CPF do cliente</Label>
+                    <Input type="text" name="name" id="name" value={cpf}
                         onChange={handleOnChange}
-                        placeholder="Digite o nome do banco" />
+                        placeholder="Digite o CPF do cliente" />
                 </FormGroup>
-                <Button>Registrar</Button>
+                <Button>Ver contas</Button>
             </Form>
+            {contasCliente.length > 1 &&
+                <div>
+                    <h3>Lista de contas:</h3>
+                    <ListaContas contas={contasCliente} />
+                </div>}
+            {contasCliente.length < 2 && contasCliente.length > 0 &&
+                <div>
+                    <h3>Contas:</h3>
+                    <Conta contas={contasCliente} />
+                </div>}
+
         </Container>
     );
 }
