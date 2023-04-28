@@ -6,12 +6,13 @@ const bancoService = new BancoService();
 
 function CadastraBancoForm() {
   const [nomeBanco, setNomeBanco] = React.useState('')
+  const [isOk, setIsOk] = React.useState(false)
 
   function handleSubmit(event) {
     event.preventDefault();
     bancoService.cadastrarBanco(nomeBanco)
     setNomeBanco('')
-
+    setIsOk(true)
   }
 
   function handleOnChange(event) {
@@ -29,6 +30,7 @@ function CadastraBancoForm() {
             placeholder="Digite o nome do banco" />
         </FormGroup>
         <Button>Registrar</Button>
+        {isOk && <p style={{ color: 'green' }}>Banco registrado com sucesso!</p>}
       </Form>
     </Container>
   );

@@ -35,17 +35,11 @@ function VerContasCliente() {
                 </FormGroup>
                 <Button>Ver contas</Button>
             </Form>
-            {contasCliente.length > 1 &&
+            {contasCliente.length >= 1 &&
                 <div>
                     <h3>Lista de contas:</h3>
                     <ListaContas contas={contasCliente} />
                 </div>}
-            {contasCliente.length < 2 && contasCliente.length > 0 &&
-                <div>
-                    <h3>Contas:</h3>
-                    <Conta contas={contasCliente} />
-                </div>}
-
         </Container>
     );
 }

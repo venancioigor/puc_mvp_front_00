@@ -100,7 +100,7 @@ function TransferirValorEntreContas() {
         </FormGroup>
         <Button>Realizar transferência</Button>
       </Form>
-      {isOk && <p>Transferência realizada com sucesso</p>}
+      {isOk && <p style={{ color: 'green' }}>Transferência realizada com sucesso</p>}
     </Container>
   );
 }

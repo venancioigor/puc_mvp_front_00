@@ -1,20 +1,31 @@
 import React from 'react';
 import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { ContaService } from '../../service/ContaService/contaService';
+import { BancoService } from '../../service/BancoService/bancoService';
 
 const contaService = new ContaService();
+const bancoService = new BancoService();
 
 function AbrirConta() {
-  const [nomeBanco, setNomeBanco] = React.useState('')
   const [cpf, setCpf] = React.useState('')
   const [saldo, setSaldo] = React.useState(0)
   const [numeroConta, setNumeroConta] = React.useState('')
   const [isOk, setIsOk] = React.useState(false)
-  const [error, setError] = React.useState('')
+  const [bancos, setBancos] = React.useState([])
+  const [bancoEscolhido, setBancoEscolhido] = React.useState('')
+
+  React.useEffect(() => {
+    bancoService.getAllBancos().then(response => {
+      if (response) {
+        setBancos(response)
+      }
+    });
+  }, []);
 
   function handleSubmit(event) {
     event.preventDefault();
-    contaService.abrirConta(cpf, nomeBanco, saldo, numeroConta)
+    const idBanco = recuperaIdBanco(bancoEscolhido)
+    contaService.abrirConta(cpf, idBanco, saldo, numeroConta)
       .then((response) => {
         if (response === 'OK') {
           setIsOk(true);
@@ -23,27 +34,35 @@ function AbrirConta() {
       .catch((error) => {
         setIsOk(false);
         console.log(error)
-        setError(error);
       });
 
-    setNomeBanco('')
+    setBancoEscolhido('')
     setCpf('')
     setSaldo(0)
     setNumeroConta('')
     setIsOk(true)
   }
 
-  function handleOnChangeBanco(event) {
-    setNomeBanco(event.target.value)
+  function recuperaIdBanco(nomeBanco) {
+    const idBanco = bancos.find(banco => banco.nome === nomeBanco).id;
+    return idBanco;
   }
+
   function handleOnChangeCpf(event) {
     setCpf(event.target.value)
   }
   function handleOnChangeSaldo(event) {
-    setSaldo(parseFloat(event.target.value))
+    const inputSaldo = event.target.value
+    if (isNaN(inputSaldo)) {
+      return
+    }
+    setSaldo(parseFloat(inputSaldo))
   }
   function handleOnChangeConta(event) {
     setNumeroConta(event.target.value)
+  }
+  function handleSelectChange(event) {
+    setBancoEscolhido(event.target.value)
   }
 
   return (
@@ -70,13 +89,16 @@ function AbrirConta() {
         </FormGroup>
         <FormGroup>
           <Label for="name">Nome do Banco</Label>
-          <Input type="text" name="name" id="name" value={nomeBanco}
-            onChange={handleOnChangeBanco}
-            placeholder="Digite o nome do banco" />
+          <Input type="select" value={bancoEscolhido} onChange={handleSelectChange}>
+            <option>Selecione um banco</option>
+            {bancos.length > 0 && bancos.map((banco, i) => (
+              <option key={banco.id} value={banco.nome}>{banco.nome}</option>
+            ))}
+          </Input>
         </FormGroup>
         <Button>Abrir conta</Button>
-        {isOk && <p>Conta aberta com sucesso!</p>}
-        {!isOk && <p>{error}</p>}
+        {isOk && <p style={{ color: 'green' }}>Conta aberta com sucesso!</p>}
+
       </Form>
     </Container>
   );

@@ -37,7 +37,7 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar style={{ width: '100%', }} color="dark" dark expand="md">
-        <NavbarBrand style={{ fontSize: '2.0rem', marginLeft: '200px' }} href="/" >MyBank</NavbarBrand>
+        <NavbarBrand style={{ fontSize: '2.0rem', marginLeft: '125px' }} href="/" >MyBank</NavbarBrand>
         <Collapse navbar>
           <Nav className="mr-auto" style={{ marginLeft: '50px', fontSize: '1.2em' }}>
           </Nav>

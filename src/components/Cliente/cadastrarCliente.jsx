@@ -40,7 +40,7 @@ function CadastraCliente() {
                 </FormGroup>
                 <Button>Registrar</Button>
             </Form>
-            {cadastrado && <p> Cliente cadastrado com sucesso!</p>}
+            {cadastrado && <p style={{ color: 'green' }}> Cliente cadastrado com sucesso!</p>}
         </Container>
     );
 }

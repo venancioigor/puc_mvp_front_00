@@ -35,16 +35,16 @@ function VerPorquinho() {
         </FormGroup>
         <Button>Ver porquinhos</Button>
       </Form>
-      {porquinhosCliente.length > 1 &&
+      {porquinhosCliente.length >= 1 &&
         <div>
           <h3>Lista de porquinhos:</h3>
           <ListaPorquinhos porquinhos={porquinhosCliente} />
         </div>}
-      {porquinhosCliente.length < 2 && porquinhosCliente.length > 0 &&
+      {/* {porquinhosCliente.length < 2 && porquinhosCliente.length > 0 &&
         <div>
           <h3>Porquinho:</h3>
           <Porquinho porquinhos={porquinhosCliente} />
-        </div>}
+        </div>} */}
     </Container>
   );
 }

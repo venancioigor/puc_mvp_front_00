@@ -1,14 +1,14 @@
 import React from 'react';
 
 function Porquinho(props) {
-    const { objetivo, id, id_cliente, saldo } = props;
+    const porquinho = props.porquinho;
 
     return (
         <div>
-            <p><strong>Objetivo: {objetivo}</strong></p>
-            <p>ID: {id}</p>
-            <p>ID Cliente: {id_cliente}</p>
-            <p>Saldo: {saldo}</p>
+            <p><strong>Objetivo: {porquinho.objetivo}</strong></p>
+            <p>ID: {porquinho.id}</p>
+            <p>ID Cliente: {porquinho.id_cliente}</p>
+            <p>Saldo: {porquinho.saldo}</p>
         </div>
     );
 }

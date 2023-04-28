@@ -14,8 +14,10 @@ function DeletarPorquinho() {
     event.preventDefault();
     const idPorquinho = recuperarIdPorquinho(porquinhoEscolhido)
     porquinhoService.deletarPorquinho(cpfCliente, idPorquinho)
+    setIsOk(true)
     setCpfCliente('')
     setPorquinhosCliente([])
+
   }
 
   function handleOnChangeCpf(event) {
@@ -58,7 +60,7 @@ function DeletarPorquinho() {
         </FormGroup>
         <Button>Deletar</Button>
       </Form>
-      {isOk && <p>Porquinho quebrado!</p>}
+      {isOk && <p style={{ color: 'red' }}>Porquinho quebrado!</p>}
     </Container>
   );
 }

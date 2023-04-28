@@ -51,8 +51,8 @@ function TransferirValorEntrePorquinho() {
   }
 
   function handleOnClickSelectDestino() {
-    const novasContas = porquinhosClienteOrigem.filter(conta => conta.conta !== porquinhoOrigemEscolhida)
-    setPorquinhosClienteDestino(novasContas)
+    const novosPorquinhos = porquinhosClienteOrigem.filter(porquinho => porquinho.objetivo !== porquinhoOrigemEscolhida)
+    setPorquinhosClienteDestino(novosPorquinhos)
   }
 
   function handleSelectChangeDestino(event) {
@@ -100,7 +100,7 @@ function TransferirValorEntrePorquinho() {
         </FormGroup>
         <Button>Realizar transferência</Button>
       </Form>
-      {isOk && <p>Transferência realizada com sucesso</p>}
+      {isOk && <p style={{ color: 'green' }}>Transferência realizada com sucesso</p>}
     </Container>
   );
 }

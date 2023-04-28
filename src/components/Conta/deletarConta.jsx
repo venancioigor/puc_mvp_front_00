@@ -8,11 +8,13 @@ function DeletarConta() {
   const [cpfCliente, setCpfCliente] = React.useState('')
   const [contasCliente, setContasCliente] = React.useState([])
   const [contaEscolhida, setContaEscolhida] = React.useState('')
+  const [isOk, setIsOk] = React.useState(false)
 
   function handleSubmit(event) {
     event.preventDefault();
     const idConta = recuperaIdConta(contaEscolhida)
     contaService.deletarConta(cpfCliente, idConta)
+    setIsOk(true)
     setCpfCliente('')
     setContasCliente([])
   }
@@ -58,6 +60,7 @@ function DeletarConta() {
         </FormGroup>
         <Button>Deletar</Button>
       </Form>
+      {isOk && <p style={{ color: 'red' }}>Conta deletada!</p>}
     </Container>
   );
 }

@@ -65,7 +65,7 @@ function RegistrarPorquinho() {
             placeholder="Digite o saldo atual do porquinho" />
         </FormGroup>
         <Button>Registrar porquinho</Button>
-        {isOk && <p>Porquinho registrado com sucesso!</p>}
+        {isOk && <p style={{ color: 'green' }}>Porquinho registrado com sucesso!</p>}
       </Form>
     </Container>
   );
